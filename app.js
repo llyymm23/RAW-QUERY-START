@@ -2,10 +2,6 @@ import express from 'express';
 import mysql from 'mysql2';
 
 const connect = mysql.createConnection({
-    host: 'express-database.chy62sci23tq.ap-northeast-2.rds.amazonaws.com', // AWS RDS 엔드포인트
-    user: 'root', // AWS RDS 계정 명
-    password: 'llyymm2312', // AWS RDS 비밀번호
-    database: 'express_db', // 연결할 MySQL DB 이름
 })
 const app = express();
 const PORT = 3017;
