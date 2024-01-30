@@ -8,6 +8,7 @@ const PORT = 3017;
 
 app.use(express.json());
 
+//테이블 생성 api
 app.post('/api/tables', async (req, res, next) => {
     const { tableName } = req.body;
 
@@ -22,6 +23,7 @@ app.post('/api/tables', async (req, res, next) => {
     return res.status(201).json({ messaage : '테이블 생성에 성공하였습니다.' });
 });
 
+//테이블 목록 조회 api
 app.get('/api/tables',async(req,res,next)=>{
     const [tableList] = await connect.promise().query(`
     SHOW TABLES
@@ -30,6 +32,7 @@ app.get('/api/tables',async(req,res,next)=>{
     return res.status(200).json({message : tableName});
 });
 
+//데이터 삽입 api
 app.post('/api/tables/:tableName/items', async(req,res,next) => {
     const {tableName} = req.params;
     const {name} = req.body;
@@ -40,6 +43,18 @@ app.post('/api/tables/:tableName/items', async(req,res,next) => {
     `);
 
     return res.status(201).json({message : '데이터 생성에 성공하였습니다.'});
+});
+
+//데이터 조회 api
+app.get('/api/tables/:tableName/items', async(req,res,next) => {
+    const {tableName} = req.params;
+
+    const [itemList] = await connect.promise().query(`
+    SELECT id, name, createdAt
+    FROM ${tableName}
+    `);
+
+    return res.status(200).json({itemList : itemList});
 });
 
 app.listen(PORT, () => {
